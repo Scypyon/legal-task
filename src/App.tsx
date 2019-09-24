@@ -1,25 +1,22 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import { Redirect } from 'react-router-dom';
 
 const App: React.FC = () => {
+
+  const [name, setName] = useState();
+  const [goNext, setGoNext] = useState(false);
+
+  const sendMyName = () => {
+    localStorage.setItem("Name", JSON.stringify(name));
+    setGoNext(true);
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      {goNext && <Redirect to="/chooseData" />}
+      <h1>Cześć ! Jak się nazywasz ?</h1>
+      <input onChange={e => setName(e.target.value)} type="text" />
+      <button onClick={sendMyName}>Done</button>
+    </>
   );
 }
 
